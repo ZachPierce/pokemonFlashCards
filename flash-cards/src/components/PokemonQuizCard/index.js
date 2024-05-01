@@ -1,7 +1,7 @@
 import './styles.css';
 import React from 'react';
 
-function PokemonDetailCard ( {pokeName, setDetailView}) {
+function PokemonQuizCard ( {pokeName, pokeType, setDetailView}) {
     return (
         <div className='card-box'>
             
@@ -17,4 +17,4 @@ function PokemonDetailCard ( {pokeName, setDetailView}) {
     );
 }
 
-export default PokemonDetailCard;
+export default PokemonQuizCard;

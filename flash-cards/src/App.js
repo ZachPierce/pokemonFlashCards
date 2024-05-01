@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import PokemonDetailCard from './components/PokemonDetailCard';
+import PokemonQuizCard from './components/PokemonQuizCard';
 //import our card component
 
 //top 40 meta relevant pokemon grabbed from PVPoke.com this is subject to change as the season progresses
@@ -14,6 +15,9 @@ function App() {
   
   //state variables to manage the views and api data
   var [pokemonList, setPokemonList] = useState({}); 
+  var [pokemonDetailView, setPokemonDetailView] = useState({}); 
+  var [pokemonListView, setPokemonListView] = useState(true); 
+
 
   useEffect(() => {
       getPokemonData();
@@ -21,7 +25,7 @@ function App() {
 
   //this function makes the api calls and formats the data into a useable list
   const getPokemonData = async () => {
-    console.log("getting pokemon data")
+
     if (Object.keys(pokemonList).length) return
 
     let pokemonNames, pokemonTypes
@@ -43,7 +47,7 @@ function App() {
     const typeCall = await fetch("https://pogoapi.net/api/v1/type_effectiveness.json");
     pokemonTypes = await typeCall.json();
 
-    console.log("did we call this?")
+
     formatData(pokemonTypes, pokemonNames)
   }
 
@@ -93,7 +97,7 @@ function App() {
         let data = calculateWeaknessAndResistances(pokemon.type, pokemonTypes)
 
         //set our data once we have it formatted how we want
-        let pokeData = {meta: 0, name, type: pokemon.type, weakness: data.weakTo, resistances: data.resistantTo}
+        let pokeData = {meta: 0, pokeName: name, pokeType: pokemon.type, weakness: data.weakTo, resistances: data.resistantTo}
         if (META_POKEMON.includes(name)) pokeData.meta = 1
         completePokeInfo.push(pokeData)
       }
@@ -106,12 +110,10 @@ function App() {
       if (a.meta < b.meta) return 1;
   
       // If meta is the same, sort by name alphabetically
-      if (a.name < b.name) return -1;
-      if (a.name > b.name) return 1;
+      if (a.pokeName < b.pokeName) return -1;
+      if (a.pokeName > b.pokeName) return 1;
       return 0;
     })
-
-    console.log("final list", completePokeInfo);
     
     setPokemonList(completePokeInfo)
 
@@ -159,22 +161,39 @@ function App() {
     return {weakTo, resistantTo}
   }
 
+  const setDetailView = (pokemon) => {
+    setPokemonDetailView(pokemon)
+    setPokemonListView(false)
+  }
+
   return (
     <div className="app">
+      
       <header className="app-header">
         PVFlashCards
       </header>
+
       <section>
-        {pokemonList.length ? pokemonList.map(pokemon => {
-          return (
-            <PokemonDetailCard  
-              pokeName={pokemon.name}
-              pokeType={pokemon.type}
-              resists={pokemon.resistances}
-              weakness={pokemon.weakness}
-            />
-          )
-        }) : null}
+       
+        <div className='list-view'>
+          {pokemonList.length && pokemonListView ? pokemonList.map(pokemon => {
+            return (
+              <span>
+                <PokemonDetailCard  
+                  pokeName={pokemon.pokeName}
+                  setDetailView={() => setDetailView(pokemon)}
+                />
+              </span>
+            )
+          }) : null}
+        </div>
+
+        {pokemonDetailView != null ? 
+          <div className='detail-view'> 
+            <PokemonQuizCard {...pokemonDetailView}/>
+          </div> : null
+        }
+
       </section>
 
     </div>

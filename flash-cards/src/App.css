@@ -1,15 +1,19 @@
-.app {
-
-}
 
 .app-header {
+  width: 100%;
   background-color: #282c34;
-  min-height: 10vh;
+  height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
   padding-left: 30px;
+  margin-bottom: 30px;
 }
 
+.list-view {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
