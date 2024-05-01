@@ -1,6 +1,6 @@
-import { logDOM } from '@testing-library/react';
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import PokemonDetailCard from './components/PokemonDetailCard';
 //import our card component
 
 //top 40 meta relevant pokemon grabbed from PVPoke.com this is subject to change as the season progresses
@@ -21,7 +21,9 @@ function App() {
 
   //this function makes the api calls and formats the data into a useable list
   const getPokemonData = async () => {
-    
+    console.log("getting pokemon data")
+    if (Object.keys(pokemonList).length) return
+
     let pokemonNames, pokemonTypes
     
     /*pokemonNames comes in as an array of objects like so
@@ -41,6 +43,7 @@ function App() {
     const typeCall = await fetch("https://pogoapi.net/api/v1/type_effectiveness.json");
     pokemonTypes = await typeCall.json();
 
+    console.log("did we call this?")
     formatData(pokemonTypes, pokemonNames)
   }
 
@@ -109,6 +112,7 @@ function App() {
     })
 
     console.log("final list", completePokeInfo);
+    
     setPokemonList(completePokeInfo)
 
   }
@@ -160,6 +164,18 @@ function App() {
       <header className="app-header">
         PVFlashCards
       </header>
+      <section>
+        {pokemonList.length ? pokemonList.map(pokemon => {
+          return (
+            <PokemonDetailCard  
+              pokeName={pokemon.name}
+              pokeType={pokemon.type}
+              resists={pokemon.resistances}
+              weakness={pokemon.weakness}
+            />
+          )
+        }) : null}
+      </section>
 
     </div>
   );
