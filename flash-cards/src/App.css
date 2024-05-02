@@ -12,7 +12,7 @@
   margin-bottom: 30px;
 }
 
-.list-view {
+.list-view, .detail-view {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import PokemonDetailCard from './components/PokemonDetailCard';
 import PokemonQuizCard from './components/PokemonQuizCard';
+import SearchBar from './components/SearchBar';
 //import our card component
 
 //top 40 meta relevant pokemon grabbed from PVPoke.com this is subject to change as the season progresses
@@ -15,7 +16,8 @@ function App() {
   
   //state variables to manage the views and api data
   var [pokemonList, setPokemonList] = useState({}); 
-  var [pokemonDetailView, setPokemonDetailView] = useState({}); 
+  var [filteredList, setFilteredList] = useState({}); 
+  var [pokemonQuizView, setPokemonQuizView] = useState({}); 
   var [pokemonListView, setPokemonListView] = useState(true); 
 
 
@@ -116,6 +118,9 @@ function App() {
     })
     
     setPokemonList(completePokeInfo)
+    //this is a bit inefficient but for this use case it works. this is here so we can have a nice user experience
+    //with the search function without going to crazy with the search design
+    setFilteredList(completePokeInfo)
 
   }
 
@@ -162,8 +167,24 @@ function App() {
   }
 
   const setDetailView = (pokemon) => {
-    setPokemonDetailView(pokemon)
+    //this is working as a toggle from the flash card list to the quiz view
+    //so we want to disable the list view and enable the quiz view
+    setPokemonQuizView(pokemon)
     setPokemonListView(false)
+  }
+
+  const searchPokemon = (pokeName) => {
+    //we want to lowercase all the search values so it works nicer 
+    let searchName = pokeName.toLowerCase()
+    //here we filter our main pokemon list and set the filtered list
+    //the pokemonList is our source of truth so anytime the search is edited
+    //the UI resopnds to it
+    let newList = pokemonList.filter(pokemon => {
+      let lowerName = pokemon.pokeName.toLowerCase()
+      return lowerName.includes(searchName)
+    })
+    
+    setFilteredList(newList)
   }
 
   return (
@@ -174,11 +195,15 @@ function App() {
       </header>
 
       <section>
-       
+
+        <SearchBar 
+          onSearch={(pokeName) => searchPokemon(pokeName)}
+        />
+
         <div className='list-view'>
-          {pokemonList.length && pokemonListView ? pokemonList.map(pokemon => {
+          {filteredList.length && pokemonListView ? filteredList.map(pokemon => {
             return (
-              <span>
+              <span key={pokemon.pokeName}>
                 <PokemonDetailCard  
                   pokeName={pokemon.pokeName}
                   setDetailView={() => setDetailView(pokemon)}
@@ -188,9 +213,9 @@ function App() {
           }) : null}
         </div>
 
-        {pokemonDetailView != null ? 
+        {Object.keys(pokemonQuizView).length ? 
           <div className='detail-view'> 
-            <PokemonQuizCard {...pokemonDetailView}/>
+            <PokemonQuizCard {...pokemonQuizView} />
           </div> : null
         }
 

@@ -6,7 +6,7 @@ function PokemonQuizCard ( {pokeName, pokeType, setDetailView}) {
         <div className='card-box'>
             
             <div className='pokemon-name'>
-                {pokeName ? pokeName : "Something went wrong"}
+                {pokeName ? pokeName : null}
             </div>
 
             <footer onClick={setDetailView} className='card-footer'>
