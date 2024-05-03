@@ -13,10 +13,10 @@
         font-weight: bold;
     }
     .card-footer {
-        background-color: #ff1f1f;
+        background-color: #ffcaaf;
         text-align: center;
         padding: 10px;
-        color: white;
+        color: black;
         cursor: pointer;
     }
 }

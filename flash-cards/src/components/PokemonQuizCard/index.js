@@ -22,9 +22,7 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances }) {
         if (quizStage === 1) {
             return (
                 <div className='answer'>
-                    Typing: {pokeType.map(pType => {
-                        return <strong>{pType}, </strong>
-                    })}
+                    Typing: <strong>{pokeType.join(", ")}</strong>
                 </div>
             )
         }
@@ -42,8 +40,12 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances }) {
             //how weak they are to the given type
             return (
                 <div className='answer'>
-                    {Object.keys(weakness).map(weakTo => {
-                        return <span>{weakness[weakTo].toFixed(2)}x <strong>{weakTo}</strong>, </span>
+                    {Object.keys(weakness).map((weakTo, index, array) => {
+                        return (
+                            <span key={weakTo}><strong>{weakTo}</strong>:{weakness[weakTo].toFixed(2)}x
+                                {index !== array.length - 1 && ', '}
+                            </span>
+                        )
                     })}
                 </div>
             )
@@ -62,8 +64,12 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances }) {
             //how resistant they are to the given type
             return (
                 <div className='answer'>
-                    {Object.keys(resistances).map(resistantTo => {
-                        return <span>{resistances[resistantTo].toFixed(2)}x <strong>{resistantTo}</strong>, </span>
+                    {Object.keys(resistances).map((resistantTo, index, array) => {
+                        return (
+                            <span key={resistantTo}><strong>{resistantTo}</strong>:{resistances[resistantTo].toFixed(2)}x 
+                                {index !== array.length - 1 && ', '}
+                            </span>
+                        )
                     })}
                 </div>
             )

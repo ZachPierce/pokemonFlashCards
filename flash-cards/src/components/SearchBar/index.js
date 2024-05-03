@@ -11,7 +11,7 @@ function SearchBar ({onSearch}) {
 
     return (
         <div className="search-container">
-            <input id="poke-search" className="search-input" type="text" placeholder="Search" onChange={searchPokemon}/>
+            <input id="poke-search" className="search-input" type="text" placeholder="Search" onChange={searchPokemon} autoFocus/>
         </div>
     )  
 }

@@ -1,19 +1,46 @@
+.app {
+  .app-header {
+    width: 100%;
+    background-color: #809bce;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: black;
+    padding-left: 30px;
+    margin-bottom: 30px;
+    font-weight: bold
+    ;
+  }
+  
+  .list-view {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .quiz-cards, .home-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+  
+  }
 
-.app-header {
-  width: 100%;
-  background-color: #282c34;
-  height: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  padding-left: 30px;
-  margin-bottom: 30px;
+  .go-home {
+    display: flex;
+    cursor: pointer;
+    width: 120px;
+    margin-left: 10px;
+  }
+  .action {
+    height: 45px;
+    pad: 13px;
+    border-radius: 6px;
+    
+    background-color: #ffcaaf;
+    margin-top: 10px;
+  }
 }
 
-.list-view, .detail-view {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}

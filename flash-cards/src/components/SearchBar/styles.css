@@ -15,7 +15,7 @@
         border: 1px solid #575756;
         
         &:focus {
-            outline: 2px solid #ff1f1f;
+            outline: 2px solid #282c34;
         }
     }
 }

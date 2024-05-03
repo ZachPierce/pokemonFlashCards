@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PokemonDetailCard from './components/PokemonDetailCard';
 import PokemonQuizCard from './components/PokemonQuizCard';
 import SearchBar from './components/SearchBar';
+import InfoPanel from './components/InfoPanel';
 //import our card component
 
 //top 40 meta relevant pokemon grabbed from PVPoke.com this is subject to change as the season progresses
@@ -11,6 +12,9 @@ const META_POKEMON = ["Cresselia", "Lickitung", "Registeel", "Quagsire", "Gligar
 "Gallade", "Goodra", "Galarian Stunfisk", "Gligar", "Medichan", "Poliwrath", "Pelipper", "Serperior", "Vigoroth", "Clodsire", "Zweilous", "Dragonair",
 "Abomasnow", "Machamp", "Hakamo-o", "Lanturn", "Jellicent", "Scrafty", "Toxapex", "Gogoat", "Kommo-o", "Trevenant"
 ]
+
+//todo - when searching during the quiz view it should reset the app to its original state
+
 
 function App() {
   
@@ -184,21 +188,33 @@ function App() {
       return lowerName.includes(searchName)
     })
     
+    setPokemonQuizView({})
+    setPokemonListView(true)
     setFilteredList(newList)
+  }
+
+  //this restores the app to the original list view
+  const resetApp = () => {
+    setPokemonListView(true)
+    setPokemonQuizView({})
+    
   }
 
   return (
     <div className="app">
       
       <header className="app-header">
-        PVFlashCards
+        <div onClick={resetApp} className='go-home'>PVFlashCards</div>
       </header>
 
       <section>
 
+
         <SearchBar 
           onSearch={(pokeName) => searchPokemon(pokeName)}
         />
+
+       
 
         <div className='list-view'>
           {filteredList.length && pokemonListView ? filteredList.map(pokemon => {
@@ -215,16 +231,24 @@ function App() {
 
         {Object.keys(pokemonQuizView).length ? 
           <div className='detail-view'> 
-            <PokemonQuizCard 
-              pokeName={pokemonQuizView.pokeName}
-              pokeType={pokemonQuizView.pokeType}
-              resistances={pokemonQuizView.resistances}
-              weakness={pokemonQuizView.weakness}
-            />
+            
+            <div className='quiz-cards'>
+              <PokemonQuizCard 
+                pokeName={pokemonQuizView.pokeName}
+                pokeType={pokemonQuizView.pokeType}
+                resistances={pokemonQuizView.resistances}
+                weakness={pokemonQuizView.weakness}
+              />
+            </div>
+           
+            <div className='home-button'>
+              <button className='action' onClick={resetApp}>Try another pokemon!</button>
+            </div>
 
           </div> : null
         }
 
+        
       </section>
 
     </div>
