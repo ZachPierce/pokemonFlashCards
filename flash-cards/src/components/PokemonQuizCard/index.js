@@ -7,10 +7,10 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances }) {
 
     var [quizStage, setQuizStage] = useState(0); 
 
-    //this funtion is used to step the user through our 3 stage quiz depending
+    //this funtion is used to step the user through our 3 stage quiz 
     const renderQuizQuestions = () => {
 
-        //question one is the typing of the pokemon
+        //question one 
         if (quizStage === 0) {
             return (
                 <div className='question'>
@@ -26,7 +26,7 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances }) {
                 </div>
             )
         }
-        //question 2
+        //question 2 
         if (quizStage === 2) {
             return (
                 <div className='question'>
@@ -74,7 +74,7 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances }) {
                 </div>
             )
         }
-
+        //final stage
         if (quizStage === 6) {
             return (
                 <div className='answer'>

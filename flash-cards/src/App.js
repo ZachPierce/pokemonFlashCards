@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PokemonDetailCard from './components/PokemonDetailCard';
 import PokemonQuizCard from './components/PokemonQuizCard';
 import SearchBar from './components/SearchBar';
-import InfoPanel from './components/InfoPanel';
-//import our card component
+
 
 //top 40 meta relevant pokemon grabbed from PVPoke.com this is subject to change as the season progresses
 const META_POKEMON = ["Cresselia", "Lickitung", "Registeel", "Quagsire", "Gligar", "Swampert", "Carbink", "Skarmory", 
@@ -12,9 +11,6 @@ const META_POKEMON = ["Cresselia", "Lickitung", "Registeel", "Quagsire", "Gligar
 "Gallade", "Goodra", "Galarian Stunfisk", "Gligar", "Medichan", "Poliwrath", "Pelipper", "Serperior", "Vigoroth", "Clodsire", "Zweilous", "Dragonair",
 "Abomasnow", "Machamp", "Hakamo-o", "Lanturn", "Jellicent", "Scrafty", "Toxapex", "Gogoat", "Kommo-o", "Trevenant"
 ]
-
-//todo - when searching during the quiz view it should reset the app to its original state
-
 
 function App() {
   
@@ -36,7 +32,7 @@ function App() {
 
     let pokemonNames, pokemonTypes
     
-    /*pokemonNames comes in as an array of objects like so
+    /*pokemonNames comes in as an array of objects like this
     [{
       pokemonName: "pikachu",
       type: ["electric"]
@@ -63,15 +59,15 @@ function App() {
 
     {
       meta: 0,
-      name: "",
-      type: ["", ""],
+      pokeName: "",
+      pokeType: ["", ""],
       resistances: {},
       weakness: {}
     }
 
     -meta is a value 0 or 1 noting the meta relavance of the pokemon, currently we are only tracking the top 40. 
-    -name is a string for the Pokemon name.
-    -type is an array of strings (maximum 2) where each string is the typeing of that pokemon
+    -pokeName is a string for the Pokemon name.
+    -pokeType is an array of strings (maximum 2) where each string is the typeing of that pokemon
     -resistances is a key value pair where the key is a pokemon type and the value is an integer with the the multiple of damage that type does to our pokemon
       for ex: resistances: {fire: 0.5} this would indicate our pokemon is resistant to fire by a multiple of 0.5 so any attack incoming is first multiplied by 0.5
     -weakness is a key value pair where the key is a pokemon type and the value is an integer with the the multiple of damage that type does to our pokemon.
@@ -123,13 +119,13 @@ function App() {
     
     setPokemonList(completePokeInfo)
     //this is a bit inefficient but for this use case it works. this is here so we can have a nice user experience
-    //with the search function without going to crazy with the search design
+    //with the search function without going too crazy with the search design
     setFilteredList(completePokeInfo)
 
   }
 
   //the goal of this function is to create a key value pair for all the types and their effectiveness on 
-  //the given pokemonTypes..ie {water: 2.0, fire: 1, grass: 0.5}
+  //the given pokemon..ie {water: 2.0, fire: 1, grass: 0.5}
   const calculateWeaknessAndResistances = (pokemonTypes, allTypes) => {
     let typeEffectiveness = {}
     let weakTo = {}
@@ -161,7 +157,7 @@ function App() {
       })
     }
 
-    //this final loop puts the types into the respective weakTo or resistantTo depending on the value
+    //this final loop puts the types into the respective weakTo or resistantTo object depending on the value
     Object.keys(typeEffectiveness).forEach( pokeType => {
       if (typeEffectiveness[pokeType] > 1) weakTo[pokeType] = typeEffectiveness[pokeType]
       if (typeEffectiveness[pokeType] < 1) resistantTo[pokeType] = typeEffectiveness[pokeType]
@@ -170,9 +166,9 @@ function App() {
     return {weakTo, resistantTo}
   }
 
-  const setDetailView = (pokemon) => {
-    //this is working as a toggle from the flash card list to the quiz view
-    //so we want to disable the list view and enable the quiz view
+  //this is working as a toggle from the flash card list to the quiz view
+  //so we want to disable the list view and enable the quiz view
+  const setQuizView = (pokemon) => {
     setPokemonQuizView(pokemon)
     setPokemonListView(false)
   }
@@ -182,18 +178,22 @@ function App() {
     let searchName = pokeName.toLowerCase()
     //here we filter our main pokemon list and set the filtered list
     //the pokemonList is our source of truth so anytime the search is edited
-    //the UI resopnds to it
+    //the UI resopnds to it, this allows for instant searching and when they delete the 
+    //string it will return to the entire list
     let newList = pokemonList.filter(pokemon => {
       let lowerName = pokemon.pokeName.toLowerCase()
       return lowerName.includes(searchName)
     })
     
+    //reset our values since we are searching, we don't need the other 
+    //data for our quiz view 
     setPokemonQuizView({})
     setPokemonListView(true)
     setFilteredList(newList)
   }
 
-  //this restores the app to the original list view
+  //this restores the app to the original list view when the home button,
+  //or "try another pokemon" button is clicked
   const resetApp = () => {
     setPokemonListView(true)
     setPokemonQuizView({})
@@ -209,26 +209,28 @@ function App() {
 
       <section>
 
-
         <SearchBar 
           onSearch={(pokeName) => searchPokemon(pokeName)}
         />
 
        
-
+        {/* looping though our list and showing the pokemon detial card which has the name
+        and a button to start the quiz */}
         <div className='list-view'>
           {filteredList.length && pokemonListView ? filteredList.map(pokemon => {
             return (
               <span key={pokemon.pokeName}>
                 <PokemonDetailCard  
                   pokeName={pokemon.pokeName}
-                  setDetailView={() => setDetailView(pokemon)}
+                  setDetailView={() => setQuizView(pokemon)}
                 />
               </span>
             )
           }) : null}
         </div>
 
+          {/* if the quiz has been started ie there is data in the pokemonquizview object then we will show that pokemon in 
+          quiz format */}
         {Object.keys(pokemonQuizView).length ? 
           <div className='detail-view'> 
             

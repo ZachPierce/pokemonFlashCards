@@ -10,8 +10,7 @@
     color: black;
     padding-left: 30px;
     margin-bottom: 30px;
-    font-weight: bold
-    ;
+    box-shadow: 0 -6px 10px 5px rgba(0,0,0,0.5);
   }
   
   .list-view {
