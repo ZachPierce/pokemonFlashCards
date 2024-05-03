@@ -215,7 +215,13 @@ function App() {
 
         {Object.keys(pokemonQuizView).length ? 
           <div className='detail-view'> 
-            <PokemonQuizCard {...pokemonQuizView} />
+            <PokemonQuizCard 
+              pokeName={pokemonQuizView.pokeName}
+              pokeType={pokemonQuizView.pokeType}
+              resistances={pokemonQuizView.resistances}
+              weakness={pokemonQuizView.weakness}
+            />
+
           </div> : null
         }
 

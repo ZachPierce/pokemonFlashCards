@@ -1,23 +1,48 @@
-.card-box {
+.quiz-card-box {
     margin: 10px;
     background-color: white;
     border-radius: 6px;
-    box-shadow: 2px 2px 2px 2px;
-    font-size: 10pt;
-    width: 310px;
+    box-shadow: 1px 1px 6px 0px;
+    width: 80%;
+    max-width: 400px;
+    height: 200px;
+    display: flex;
 
+    .left-button, .right-button {
+        display: flex;
+        align-items:  center;
+        justify-content: flex-end;
+        width: 10%;
+        background: linear-gradient(-86deg, #E7E7E7, rgba(232, 232, 232, 0));
+        &:hover {
+            cursor: pointer;
+            svg {
+                color: red;
+            }
+        }
+      
+    }
 
-    .pokemon-name {
-        font-size: 1.5em;
-        text-align: center;
-        padding: 20px;
-        font-weight: bold;
+    .left-button {
+        transform: rotate(180deg);
     }
-    .card-footer {
-        background-color: #ff1f1f;
-        text-align: center;
-        padding: 10px;
-        color: white;
-        cursor: pointer;
+
+    .quiz-info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 80%;
+
+        .poke-name {
+            font-size: 1.5em;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .quiz-details {
+            text-align: center;
+            width: 100%;
+        }
     }
+   
 }
