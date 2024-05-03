@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PokemonDetailCard from './components/PokemonDetailCard';
 import PokemonQuizCard from './components/PokemonQuizCard';
 import SearchBar from './components/SearchBar';
+import InfoPanel from './components/InfoPanel';
 
 
 //top 40 meta relevant pokemon grabbed from PVPoke.com this is subject to change as the season progresses
@@ -11,6 +12,11 @@ const META_POKEMON = ["Cresselia", "Lickitung", "Registeel", "Quagsire", "Gligar
 "Gallade", "Goodra", "Galarian Stunfisk", "Gligar", "Medichan", "Poliwrath", "Pelipper", "Serperior", "Vigoroth", "Clodsire", "Zweilous", "Dragonair",
 "Abomasnow", "Machamp", "Hakamo-o", "Lanturn", "Jellicent", "Scrafty", "Toxapex", "Gogoat", "Kommo-o", "Trevenant"
 ]
+
+//this is our app info message
+const APP_INFO = `Welcome to PVFlashCards! The purpose of this tool is to help you study pokemon, their types, weaknesses, and resistances so you can perform better
+                  when competing in the PVP leagues of PokemonGo. The top 40 Meta pokemon are on the top of this list, you can also search to find any pokemon you 
+                  would like. Once you click a pokemon card you will be presented with a small quiz that you can click through at your own pace! Good luck!`
 
 function App() {
   
@@ -26,6 +32,8 @@ function App() {
     }, []);
 
   //this function makes the api calls and formats the data into a useable list
+  //using async await here since we are setting a state variable, we want to make
+  //sure the api calls are finished before trying to do that
   const getPokemonData = async () => {
 
     if (Object.keys(pokemonList).length) return
@@ -99,8 +107,10 @@ function App() {
         let data = calculateWeaknessAndResistances(pokemon.type, pokemonTypes)
 
         //set our data once we have it formatted how we want
-        let pokeData = {meta: 0, pokeName: name, pokeType: pokemon.type, weakness: data.weakTo, resistances: data.resistantTo}
+        let pokeData = {meta: 0, pokeName: name, pokeType: pokemon.type, weakness: data.weakTo, resistances: data.resistantTo, completedQuiz: 0}
+        
         if (META_POKEMON.includes(name)) pokeData.meta = 1
+        
         completePokeInfo.push(pokeData)
       }
       
@@ -200,6 +210,20 @@ function App() {
     
   }
 
+  const updateQuizComplete = (pokeName) => {
+    let tempPokeList = pokemonList
+    for (let pokemon of tempPokeList) {
+      if(pokemon.pokeName == pokeName) {
+        pokemon.completedQuiz = 1
+      }
+    }
+    console.log("calling seet list", tempPokeList);
+    setPokemonList(tempPokeList)
+    setFilteredList(tempPokeList)
+  }
+
+  
+
   return (
     <div className="app">
       
@@ -209,11 +233,18 @@ function App() {
 
       <section>
 
-        <SearchBar 
-          onSearch={(pokeName) => searchPokemon(pokeName)}
-        />
-
-       
+        {pokemonListView ? 
+          <div className='info-panel-container'>
+            <InfoPanel text={APP_INFO} />
+          </div> : null
+        }
+  
+        <div>
+          <SearchBar 
+            onSearch={(pokeName) => searchPokemon(pokeName)}
+          />
+        </div>
+      
         {/* looping though our list and showing the pokemon detial card which has the name
         and a button to start the quiz */}
         <div className='list-view'>
@@ -221,6 +252,7 @@ function App() {
             return (
               <span key={pokemon.pokeName}>
                 <PokemonDetailCard  
+                  completedQuiz={pokemon.completedQuiz}
                   pokeName={pokemon.pokeName}
                   setDetailView={() => setQuizView(pokemon)}
                 />
@@ -240,6 +272,7 @@ function App() {
                 pokeType={pokemonQuizView.pokeType}
                 resistances={pokemonQuizView.resistances}
                 weakness={pokemonQuizView.weakness}
+                updateQuizComplete={updateQuizComplete}
               />
             </div>
            

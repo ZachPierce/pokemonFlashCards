@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 
 import Arrow from '@mui/icons-material/ArrowForwardIos';
 
-function PokemonQuizCard ({pokeName, pokeType, weakness, resistances }) {
+//this component is a basic card tile, it manages a counter to determine what
+//questions to display based on user input. 
+function PokemonQuizCard ({pokeName, pokeType, weakness, resistances, updateQuizComplete }) {
 
     var [quizStage, setQuizStage] = useState(0); 
 
-    //this funtion is used to step the user through our 3 stage quiz 
+    //this function is used to step the user through our 3 stage quiz 
     const renderQuizQuestions = () => {
 
         //question one 
@@ -76,6 +78,7 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances }) {
         }
         //final stage
         if (quizStage === 6) {
+            updateQuizComplete(pokeName)
             return (
                 <div className='answer'>
                     Great Job!
@@ -88,7 +91,9 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances }) {
     //with some edge case handling if they are at the beginning or the end of the quiz
     const stepQuiz = (amt) => {
         
+        //if we are at the end of the quiz done increase it
         if (quizStage <= 5 && amt === 1) setQuizStage(quizStage + amt)
+        //if the quiz stage is 0 dont decrease it
         if (quizStage > 0 && amt === -1) setQuizStage(quizStage + amt)
         
     }
@@ -102,7 +107,7 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances }) {
             </div>
 
             <div className='quiz-info'>
-                <div className='poke-name' >
+                <div className='poke-name'>
                     {pokeName ? pokeName : null}
                 </div>
                

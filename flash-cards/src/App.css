@@ -41,5 +41,10 @@
     background-color: #ffcaaf;
     margin-top: 10px;
   }
+
+  .info-panel-container {
+    display: flex;
+    justify-content: center;
+  }
 }
 
