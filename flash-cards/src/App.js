@@ -15,8 +15,8 @@ const META_POKEMON = ["Cresselia", "Lickitung", "Registeel", "Quagsire", "Gligar
 
 //this is our app info message
 const APP_INFO = `Welcome to PVFlashCards! The purpose of this tool is to help you study pokemon, their types, weaknesses, and resistances so you can perform better
-                  when competing in the PVP leagues of PokemonGo. The top 40 Meta pokemon are on the top of this list, you can also search to find any pokemon you 
-                  would like. Once you click a pokemon card you will be presented with a small quiz that you can click through at your own pace! Good luck!`
+                  when competing in the PVP leagues of PokemonGo. The top 40 Meta pokemon are on the top of this list, however you can search to find any pokemon you 
+                  would like. Once you click a pokemon card you will be presented with a few questions that you can click through at your own pace! Good luck!`
 
 function App() {
   
@@ -25,6 +25,7 @@ function App() {
   var [filteredList, setFilteredList] = useState({}); 
   var [pokemonQuizView, setPokemonQuizView] = useState({}); 
   var [pokemonListView, setPokemonListView] = useState(true); 
+  var [showingPokemon, setShowingPokemon] = useState(40);
 
 
   useEffect(() => {
@@ -246,9 +247,9 @@ function App() {
         </div>
       
         {/* looping though our list and showing the pokemon detial card which has the name
-        and a button to start the quiz */}
+        and a button to start the quiz, the filter here is for basic pagination  */}
         <div className='list-view'>
-          {filteredList.length && pokemonListView ? filteredList.map(pokemon => {
+          {filteredList.length && pokemonListView ? filteredList.slice(0, showingPokemon).map(pokemon => {
             return (
               <span key={pokemon.pokeName}>
                 <PokemonDetailCard  
@@ -259,6 +260,10 @@ function App() {
               </span>
             )
           }) : null}
+
+          {/* this is a basic pagination functionality so we just show a show more button at the bottom and increase our number of
+          pokemon that are allowed to show */}
+         
         </div>
 
           {/* if the quiz has been started ie there is data in the pokemonquizview object then we will show that pokemon in 
@@ -283,7 +288,13 @@ function App() {
           </div> : null
         }
 
-        
+        {pokemonListView && filteredList.length > showingPokemon ? 
+        <div className='show-more'>
+          <button className='action' onClick={() => setShowingPokemon(showingPokemon + 40)}>
+              Show me more pokemon
+            </button>
+        </div> : null
+        }
       </section>
 
     </div>

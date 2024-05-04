@@ -6,13 +6,13 @@ import React from 'react';
 //has been clicked to start the quiz
 function PokemonDetailCard ( {pokeName, setDetailView, completedQuiz}) {
     return (
-        <div className={completedQuiz ? 'card-box completed' : "card-box"}>
+        <div className={completedQuiz ? 'card-box completed' : "card-box"}  onClick={setDetailView}>
             
             <div className='pokemon-name'>
                 {pokeName ? pokeName : null}
             </div>
 
-            <footer onClick={setDetailView} className='card-footer'>
+            <footer className='card-footer'>
                 Test My Knowledge!
             </footer>
             

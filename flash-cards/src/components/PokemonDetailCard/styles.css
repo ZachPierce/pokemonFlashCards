@@ -3,8 +3,8 @@
     background-color: white;
     border-radius: 6px;
     box-shadow: 1px 1px 6px 0px;
-    width: 310px;
-
+    width: 370px;
+    cursor: pointer;
 
     .pokemon-name {
         font-size: 1.5em;
@@ -13,13 +13,14 @@
         font-weight: bold;
     }
     .card-footer {
-        background-color: #ffcaaf;
+        background-color: #809bce;
         text-align: center;
         padding: 10px;
         color: black;
-        cursor: pointer;
+       
+        border-radius: 0 0 6px 6px;
     }
 }
 .completed {
-    box-shadow: 0px 0px 10px 5px darkgreen;
+    box-shadow: 0px 0px 10px 2px darkgreen;
 }

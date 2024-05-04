@@ -1,7 +1,8 @@
 .app {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   .app-header {
     width: 100%;
-    background-color: #809bce;
+    background-color: white;
     height: 60px;
     display: flex;
     flex-direction: column;
@@ -11,6 +12,12 @@
     padding-left: 30px;
     margin-bottom: 30px;
     box-shadow: 0 -6px 10px 5px rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+  }
+
+  section {
+    margin-top: 95px;
   }
   
   .list-view {
@@ -23,27 +30,40 @@
     display: flex;
     align-items: center;
     justify-content: center;
-   
-  
   }
 
   .go-home {
     display: flex;
     cursor: pointer;
-    width: 120px;
+    width: 150px;
     margin-left: 10px;
+    border-bottom: 2px solid #aaa;
   }
   .action {
     height: 45px;
-    pad: 13px;
-    border-radius: 6px;
-    
-    background-color: #ffcaaf;
+
+    padding: 6px 10px;
+    background-color: rgba(0,0,0,0);
+    border: 2px solid #6d8bc2;
+    color: #6d8bc2;
+    border-radius: 5px;
+    font-size: 1em;
     margin-top: 10px;
+    outline: none;
+    margin-bottom: 20px;
+    &:hover {
+        background-color: rgba(0,0,0, 0.07);
+        cursor: pointer;
+    }
   }
 
   .info-panel-container {
     display: flex;
+    justify-content: center;
+  }
+  .show-more {
+    display: flex;
+    align-items: center;
     justify-content: center;
   }
 }

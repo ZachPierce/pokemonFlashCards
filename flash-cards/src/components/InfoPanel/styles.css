@@ -2,11 +2,11 @@
     .panel-info {
         display: flex;
         justify-content: center;
-        width: 73%;
+        width: 85%;
         margin-bottom: 30px;
 
-        padding: 10px;
-        background-color: #adf7b6;
+        padding: 15px;
+        background-color: #809bce;
         border-radius: 6px;
         box-shadow: 2px 2px;
         font-size: 13pt;
