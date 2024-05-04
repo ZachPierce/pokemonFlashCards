@@ -6,11 +6,20 @@
         width: 85%;
         margin-bottom: 30px;
 
-        padding: 15px;
+        padding: 0px 10px;
         background-color: #809bce;
         border-radius: 6px;
         box-shadow: 2px 2px;
         font-size: 13pt;
         
+        position: relative;
+        .icon-container {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            &:hover {
+                cursor: pointer;
+            }
+        }
     }
 

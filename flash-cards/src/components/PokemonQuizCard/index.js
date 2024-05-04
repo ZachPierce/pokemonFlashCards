@@ -15,25 +15,25 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances, updateQuiz
         //question one 
         if (quizStage === 0) {
             return (
-                <div className='question'>
+                <p className='question'>
                     What is {pokeName}'s typing?
-                </div>
+                </p>
             )
         }
         //answer to question one
         if (quizStage === 1) {
             return (
-                <div className='answer'>
-                    Typing: <strong>{pokeType.join(", ")}</strong>
-                </div>
+                <p className='answer'>
+                    Typing: {pokeType.join(", ")}
+                </p>
             )
         }
         //question 2 
         if (quizStage === 2) {
             return (
-                <div className='question'>
+                <p className='question'>
                     What are {pokeName}'s weaknesses?
-                </div>
+                </p>
             )
         }
         //answer to question 2
@@ -44,9 +44,9 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances, updateQuiz
                 <div className='answer'>
                     {Object.keys(weakness).map((weakTo, index, array) => {
                         return (
-                            <span key={weakTo}><strong>{weakTo}</strong>:{weakness[weakTo].toFixed(2)}x
+                            <p className="weak-to" key={weakTo}>{weakTo}: {weakness[weakTo].toFixed(2)}x
                                 {index !== array.length - 1 && ', '}
-                            </span>
+                            </p>
                         )
                     })}
                 </div>
@@ -55,9 +55,9 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances, updateQuiz
         //question 3
         if (quizStage === 4) {
             return (
-                <div className='question'>
+                <p className='question'>
                     What are {pokeName}'s resistances?
-                </div>
+                </p>
             )
         }
         //answer to question 3
@@ -68,9 +68,9 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances, updateQuiz
                 <div className='answer'>
                     {Object.keys(resistances).map((resistantTo, index, array) => {
                         return (
-                            <span key={resistantTo}><strong>{resistantTo}</strong>:{resistances[resistantTo].toFixed(2)}x 
+                            <p className="resistant-to" key={resistantTo}>{resistantTo}: {resistances[resistantTo].toFixed(2)}x 
                                 {index !== array.length - 1 && ', '}
-                            </span>
+                            </p>
                         )
                     })}
                 </div>
@@ -80,9 +80,9 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances, updateQuiz
         if (quizStage === 6) {
             updateQuizComplete(pokeName)
             return (
-                <div className='answer'>
+                <p className='answer'>
                     Great Job!
-                </div>
+                </p>
             )
         }
     }
@@ -101,26 +101,26 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances, updateQuiz
     
     
     return (
-        <div className='quiz-card-box'>
-            <div className='left-button' onClick={() => stepQuiz(-1)}>
+        <section className='quiz-card-box'>
+            <span className='left-button' onClick={() => stepQuiz(-1)}>
                 <Arrow/>
-            </div>
+            </span>
 
             <div className='quiz-info'>
-                <div className='poke-name'>
+                <span className='poke-name'>
                     {pokeName ? pokeName : null}
-                </div>
+                </span>
                
                 <div className='quiz-details'>
                     {renderQuizQuestions()}
                 </div>
             </div>
 
-            <div className='right-button' onClick={() => stepQuiz(1)}>
+            <span className='right-button' onClick={() => stepQuiz(1)}>
                 <Arrow/>
-            </div>
+            </span>
             
-        </div>
+        </section>
     );
 }
 

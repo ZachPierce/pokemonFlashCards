@@ -49,5 +49,10 @@
             width: 100%;
         }
     }
+    .answer {
+        .weak-to, .resistant-to {
+            margin: 0px;
+        }
+    }
    
 }

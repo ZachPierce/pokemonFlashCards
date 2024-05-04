@@ -15,10 +15,11 @@
     box-shadow: 0 -6px 10px 5px rgba(0,0,0,0.5);
     position: fixed;
     top: 0;
+    z-index: 1;
   }
 
   /* this is to help with the sticky header we need that extra space at the top of the main app page */
-  section {
+  .app-main {
     margin-top: 95px;
   }
   

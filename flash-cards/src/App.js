@@ -26,6 +26,7 @@ function App() {
   var [pokemonQuizView, setPokemonQuizView] = useState({}); 
   var [pokemonListView, setPokemonListView] = useState(true); 
   var [showingPokemon, setShowingPokemon] = useState(40);
+  var [infoMessage, setInfoMessage] = useState(true);
 
 
   useEffect(() => {
@@ -223,6 +224,9 @@ function App() {
     setFilteredList(tempPokeList)
   }
 
+  const closeInfo = () => {
+    setInfoMessage(false)
+  }
   
 
   return (
@@ -232,23 +236,21 @@ function App() {
         <div onClick={resetApp} className='go-home'>PVFlashCards</div>
       </header>
 
-      <section>
+      <main className='app-main'>
 
-        {pokemonListView ? 
-          <div className='info-panel-container'>
-            <InfoPanel text={APP_INFO} />
-          </div> : null
+        { infoMessage && pokemonListView ? 
+          <aside className='info-panel-container'>
+            <InfoPanel text={APP_INFO} closeInfo={closeInfo}/>
+          </aside> : null
         }
   
-        <div>
-          <SearchBar 
-            onSearch={(pokeName) => searchPokemon(pokeName)}
-          />
-        </div>
+        <SearchBar 
+          onSearch={(pokeName) => searchPokemon(pokeName)}
+        />
       
         {/* looping though our list and showing the pokemon detial card which has the name
         and a button to start the quiz, the filter here is for basic pagination  */}
-        <div className='list-view'>
+        <section className='list-view'>
           {filteredList.length && pokemonListView ? filteredList.slice(0, showingPokemon).map(pokemon => {
             return (
               <span key={pokemon.pokeName}>
@@ -264,12 +266,12 @@ function App() {
           {/* this is a basic pagination functionality so we just show a show more button at the bottom and increase our number of
           pokemon that are allowed to show */}
          
-        </div>
+        </section>
 
           {/* if the quiz has been started ie there is data in the pokemonquizview object then we will show that pokemon in 
-          quiz format */}
+          quiz view */}
         {Object.keys(pokemonQuizView).length ? 
-          <div className='detail-view'> 
+          <section className='detail-view'> 
             
             <div className='quiz-cards'>
               <PokemonQuizCard 
@@ -281,21 +283,21 @@ function App() {
               />
             </div>
            
-            <div className='home-button'>
+            <footer className='home-button'>
               <button className='action' onClick={resetApp}>Try another pokemon!</button>
-            </div>
+            </footer>
 
-          </div> : null
+          </section> : null
         }
-
+        {/* this is our show more button just in case the user is scrolling through the list manually and not searching */}
         {pokemonListView && filteredList.length > showingPokemon ? 
-        <div className='show-more'>
+        <footer className='show-more'>
           <button className='action' onClick={() => setShowingPokemon(showingPokemon + 40)}>
               Show me more pokemon
             </button>
-        </div> : null
+        </footer> : null
         }
-      </section>
+      </main>
 
     </div>
   );
