@@ -1,3 +1,4 @@
+/* creating the quiz panel */
 .quiz-card-box {
     margin: 10px;
     background-color: white;
@@ -7,7 +8,7 @@
     max-width: 400px;
     height: 200px;
     display: flex;
-
+    /* creating some gradients and buttons for a nice ui/ux clicking through the quiz */
     .left-button, .right-button {
         display: flex;
         align-items:  center;
@@ -16,17 +17,19 @@
         background: linear-gradient(-86deg, #E7E7E7, rgba(232, 232, 232, 0));
         &:hover {
             cursor: pointer;
+            background: linear-gradient(-86deg, #E7E7E7, rgba(232, 232, 232, 0.5));
             svg {
-                color: red;
+                color: #809bce;
             }
         }
       
     }
-
+    /* flipping this size so that the icon is facing the right way */
     .left-button {
         transform: rotate(180deg);
     }
 
+    /* centering the text and some other basic font styles */
     .quiz-info {
         display: flex;
         flex-wrap: wrap;
@@ -37,7 +40,9 @@
             font-size: 1.5em;
             text-align: center;
             font-weight: bold;
-            margin-top: 15px;
+            
+            display: flex;
+            align-items: center;
         }
         .quiz-details {
             text-align: center;

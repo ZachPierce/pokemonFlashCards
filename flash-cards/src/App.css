@@ -1,5 +1,6 @@
 .app {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  /* making the header, its a simple white one with a shadow, it is also sticky which is why we have the position fixed */
   .app-header {
     width: 100%;
     background-color: white;
@@ -7,7 +8,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: calc(10px + 2vmin);
+    font-size: 19pt;
     color: black;
     padding-left: 30px;
     margin-bottom: 30px;
@@ -16,6 +17,7 @@
     top: 0;
   }
 
+  /* this is to help with the sticky header we need that extra space at the top of the main app page */
   section {
     margin-top: 95px;
   }
@@ -32,6 +34,7 @@
     justify-content: center;
   }
 
+  /* this is our header text container */
   .go-home {
     display: flex;
     cursor: pointer;
@@ -39,6 +42,7 @@
     margin-left: 10px;
     border-bottom: 2px solid #aaa;
   }
+  /* this is our main button styles */
   .action {
     height: 45px;
 

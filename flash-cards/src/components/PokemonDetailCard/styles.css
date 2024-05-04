@@ -1,4 +1,5 @@
 .card-box {
+    /* creating our panel again and setting our cursor on hover */
     margin: 10px;
     background-color: white;
     border-radius: 6px;
@@ -6,12 +7,14 @@
     width: 370px;
     cursor: pointer;
 
+    /* centering and setting font styles */
     .pokemon-name {
         font-size: 1.5em;
         text-align: center;
         padding: 20px;
         font-weight: bold;
     }
+    /* creating a footer for the button effect and to lead the user into clicking the card */
     .card-footer {
         background-color: #809bce;
         text-align: center;
@@ -21,6 +24,7 @@
         border-radius: 0 0 6px 6px;
     }
 }
+/* when the user completes a flash card we highlight that with green here */
 .completed {
     box-shadow: 0px 0px 10px 2px darkgreen;
 }

@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    /* making a search bar, pulled the svg icon off w3 so that is the link we see here */
     .search-input {
         height: 24px;
         width: 300px;
@@ -13,9 +14,9 @@
         background-position: 95% center;
         border-radius: 50px;
         border: 1px solid #575756;
-        
+        /* on focus we highlight the search */
         &:focus {
-            outline: 2px solid #adf7b6;
+            outline: 2px solid #809bce;
         }
     }
 }

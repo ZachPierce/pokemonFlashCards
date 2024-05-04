@@ -1,5 +1,6 @@
 
     .panel-info {
+        /* centering our text, setting colors and creating the panel with borders and shadows */
         display: flex;
         justify-content: center;
         width: 85%;
