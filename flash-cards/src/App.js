@@ -59,6 +59,8 @@ function App() {
     const typeCall = await fetch("https://pogoapi.net/api/v1/type_effectiveness.json");
     pokemonTypes = await typeCall.json();
 
+    //quick alert to let the user know the api hasn't resonded properly
+    if (pokemonNames.length === 0 || Object.keys(pokemonTypes).length === 0) alert("something went wrong getting the data refresh your page to try again")
 
     formatData(pokemonTypes, pokemonNames)
   }
