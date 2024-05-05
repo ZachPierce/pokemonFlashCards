@@ -11,13 +11,13 @@ test('Testing that the two buttons on the quiz card render', async () => {
     expect(buttonCount).toHaveLength(2);
   });
 
-test('Testing that the two buttons on the quiz card render', async () => {
+test('Testing that the button on the detail card render', async () => {
   render(<PokemonDetailCard />);
   const buttonCount = await screen.findAllByRole('button')
   expect(buttonCount).toHaveLength(1);
 });
 
-test('Testing that the two buttons on the quiz card render', async () => {
+test('Testing that the button on the info panel renders', async () => {
   render(<InfoPanel />);
   const buttonCount = await screen.findAllByRole('button')
   expect(buttonCount).toHaveLength(1);

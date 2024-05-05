@@ -46,7 +46,7 @@ test('renders pokemon cards', () => {
 
 //simple test to ensure our quiz cards are rendering -- this is kind of silly but it ensures
 //that the component is functining at the most basic level
-test('renders pokemon cards', () => {
+test('renders pokemon quiz screen', () => {
   render(<PokemonQuizCard />);
   const linkElement = screen.getByText(/What is/i);
   expect(linkElement).toBeInTheDocument();
