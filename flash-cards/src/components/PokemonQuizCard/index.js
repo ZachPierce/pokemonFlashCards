@@ -102,7 +102,7 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances, updateQuiz
     
     return (
         <section className='quiz-card-box'>
-            <span className='left-button' onClick={() => stepQuiz(-1)}>
+            <span className='left-button' onClick={() => stepQuiz(-1)} role='button'>
                 <Arrow/>
             </span>
 
@@ -116,7 +116,7 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances, updateQuiz
                 </div>
             </div>
 
-            <span className='right-button' onClick={() => stepQuiz(1)}>
+            <span className='right-button' onClick={() => stepQuiz(1)} role='button'>
                 <Arrow/>
             </span>
             

@@ -8,7 +8,8 @@ function InfoPanel({text, closeInfo}) {
 
     return (
         <div className="panel-info">
-            <span className='icon-container' onClick={closeInfo}>
+            {/* this is a little x icon to close the info message if the user finds it distracting */}
+            <span className='icon-container' onClick={closeInfo} role='button'>
                 <CloseIcon />
             </span>
 

@@ -26,8 +26,7 @@ function App() {
   var [pokemonQuizView, setPokemonQuizView] = useState({}); 
   var [pokemonListView, setPokemonListView] = useState(true); 
   var [showingPokemon, setShowingPokemon] = useState(40);
-  var [infoMessage, setInfoMessage] = useState(true);
-
+  var [showInfoMessage, setShowInfoMessage] = useState(true);
 
   useEffect(() => {
       getPokemonData();
@@ -208,26 +207,30 @@ function App() {
 
   //this restores the app to the original list view when the home button,
   //or "try another pokemon" button is clicked
-  const resetApp = () => {
+  const resetApp = (noInfoMessage) => {
     setPokemonListView(true)
     setPokemonQuizView({})
+    setShowingPokemon(40)
+    console.log("wtf", noInfoMessage)
+    if (!noInfoMessage) setShowInfoMessage(true)
     
   }
 
   const updateQuizComplete = (pokeName) => {
     let tempPokeList = pokemonList
     for (let pokemon of tempPokeList) {
-      if(pokemon.pokeName == pokeName) {
+      if(pokemon.pokeName === pokeName) {
         pokemon.completedQuiz = 1
       }
     }
-    console.log("calling seet list", tempPokeList);
+    
     setPokemonList(tempPokeList)
     setFilteredList(tempPokeList)
   }
 
+  //this is called when the user clicks the close info button
   const closeInfo = () => {
-    setInfoMessage(false)
+    setShowInfoMessage(false)
   }
   
 
@@ -235,12 +238,12 @@ function App() {
     <div className="app">
       
       <header className="app-header">
-        <div onClick={resetApp} className='go-home'>PVFlashCards</div>
+        <div onClick={() => resetApp(false)} className='go-home' role='button' data-testid="reset">PVFlashCards</div>
       </header>
 
       <main className='app-main'>
 
-        { infoMessage && pokemonListView ? 
+        { showInfoMessage && pokemonListView ? 
           <aside className='info-panel-container'>
             <InfoPanel text={APP_INFO} closeInfo={closeInfo}/>
           </aside> : null
@@ -253,6 +256,7 @@ function App() {
         {/* looping though our list and showing the pokemon detial card which has the name
         and a button to start the quiz, the filter here is for basic pagination  */}
         <section className='list-view'>
+        
           {filteredList.length && pokemonListView ? filteredList.slice(0, showingPokemon).map(pokemon => {
             return (
               <span key={pokemon.pokeName}>
@@ -271,7 +275,7 @@ function App() {
         </section>
 
           {/* if the quiz has been started ie there is data in the pokemonquizview object then we will show that pokemon in 
-          quiz view */}
+          quiz view..this could be pulled out into a function but its so short currently that it is still easy to follow*/}
         {Object.keys(pokemonQuizView).length ? 
           <section className='detail-view'> 
             
@@ -286,7 +290,7 @@ function App() {
             </div>
            
             <footer className='home-button'>
-              <button className='action' onClick={resetApp}>Try another pokemon!</button>
+              <button className='action' onClick={() => resetApp(true)}>Try another pokemon!</button>
             </footer>
 
           </section> : null

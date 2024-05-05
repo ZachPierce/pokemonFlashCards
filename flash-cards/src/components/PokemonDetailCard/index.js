@@ -6,7 +6,7 @@ import React from 'react';
 //has been clicked to start the quiz
 function PokemonDetailCard ( {pokeName, setDetailView, completedQuiz}) {
     return (
-        <section className={completedQuiz ? 'card-box completed' : "card-box"}  onClick={setDetailView}>
+        <section className={completedQuiz ? 'card-box completed' : "card-box"}  onClick={setDetailView} role='button'>
             
             <div className='pokemon-name'>
                 {pokeName ? pokeName : "Something went wrong"}
