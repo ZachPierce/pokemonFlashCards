@@ -21,12 +21,12 @@ const APP_INFO = `Welcome to PVFlashCards! The purpose of this tool is to help y
 function App() {
   
   //state variables to manage the views and api data
-  var [pokemonList, setPokemonList] = useState({}); 
-  var [filteredList, setFilteredList] = useState({}); 
-  var [pokemonQuizView, setPokemonQuizView] = useState({}); 
-  var [pokemonListView, setPokemonListView] = useState(true); 
-  var [showingPokemon, setShowingPokemon] = useState(40);
-  var [showInfoMessage, setShowInfoMessage] = useState(true);
+  const [pokemonList, setPokemonList] = useState([]); 
+  const [filteredList, setFilteredList] = useState({}); 
+  const [pokemonQuizView, setPokemonQuizView] = useState({}); 
+  const [pokemonListView, setPokemonListView] = useState(true); 
+  const [showingPokemon, setShowingPokemon] = useState(40);
+  const [showInfoMessage, setShowInfoMessage] = useState(true);
 
   useEffect(() => {
       getPokemonData();
@@ -39,7 +39,8 @@ function App() {
 
     if (Object.keys(pokemonList).length) return
 
-    let pokemonNames, pokemonTypes
+    let pokemonNames = [];
+    let pokemonTypes = {};
     
     /*pokemonNames comes in as an array of objects like this
     [{
@@ -59,9 +60,11 @@ function App() {
     pokemonTypes = await typeCall.json();
 
     //quick alert to let the user know the api hasn't resonded properly
-    if (pokemonNames.length === 0 || Object.keys(pokemonTypes).length === 0) alert("something went wrong getting the data refresh your page to try again")
+    if (pokemonNames.length === 0 || Object.keys(pokemonTypes).length === 0) {
+      alert("something went wrong getting the data refresh your page to try again");
+    }
 
-    formatData(pokemonTypes, pokemonNames)
+    formatData(pokemonTypes, pokemonNames);
   }
 
   /*
@@ -87,11 +90,11 @@ function App() {
   */
   const formatData = (pokemonTypes, pokemonNames) => {
   
-    let completePokeInfo = []
+    let completePokeInfo = [];
 
     for (let pokemon of pokemonNames) {
 
-      let name = pokemon.pokemon_name
+      let name = pokemon.pokemon_name;
       //we only want to look at normal, alolan and galarian pokemon. The data source we are dealing with
       //has things like "gofest" and "party hat" and we don't need to worry about those pokemon as they are just 
       //unnessesary variants of the same pokemon
@@ -99,22 +102,30 @@ function App() {
 
         //prefixing the pokemons regional variant to the name for ease of use
         if (pokemon.form === "Alola") {
-          name = "Alolan " + pokemon.pokemon_name
+          name = "Alolan " + pokemon.pokemon_name;
         } else if (pokemon.form === "Galarian") {
-          name = "Galarian " + pokemon.pokemon_name
+          name = "Galarian " + pokemon.pokemon_name;
         } 
         
         //need to calcuulate the weaknesses and resistances 
         //this takes in the current pokemons type and a list of all types and  returns an object {weakTo, resistantTo} for our current
         //pokemon
-        let data = calculateWeaknessAndResistances(pokemon.type, pokemonTypes)
+        let data = calculateWeaknessAndResistances(pokemon.type, pokemonTypes);
 
         //set our data once we have it formatted how we want
-        let pokeData = {meta: 0, pokeName: name, pokeType: pokemon.type, weakness: data.weakTo, resistances: data.resistantTo, completedQuiz: 0}
+        let pokeData = 
+          {
+            meta: 0, 
+            pokeName: name, 
+            pokeType: pokemon.type, 
+            weakness: data.weakTo, 
+            resistances: data.resistantTo, 
+            completedQuiz: 0
+          };
         
-        if (META_POKEMON.includes(name)) pokeData.meta = 1
+        if (META_POKEMON.includes(name)) pokeData.meta = 1;
         
-        completePokeInfo.push(pokeData)
+        completePokeInfo.push(pokeData);
       }
       
     }
@@ -130,19 +141,19 @@ function App() {
       return 0;
     })
     
-    setPokemonList(completePokeInfo)
+    setPokemonList(completePokeInfo);
     //this is a bit inefficient but for this use case it works. this is here so we can have a nice user experience
     //with the search function without going too crazy with the search design
-    setFilteredList(completePokeInfo)
+    setFilteredList(completePokeInfo);
 
   }
 
   //the goal of this function is to create a key value pair for all the types and their effectiveness on 
   //the given pokemon..ie {water: 2.0, fire: 1, grass: 0.5}
   const calculateWeaknessAndResistances = (pokemonTypes, allTypes) => {
-    let typeEffectiveness = {}
-    let weakTo = {}
-    let resistantTo = {}
+    let typeEffectiveness = {};
+    let weakTo = {};
+    let resistantTo = {};
 
     //loop through the types of the pokemon that we are calculating, this can be either a single type or a double type
     //ie ["water"] or ["ground", "water"]
@@ -153,17 +164,17 @@ function App() {
         
         //looping through the nested key value pair for the above type
         Object.keys(allTypes[allTypesKey]).forEach(effectivenessKey => {
-          let effectivenessMap = allTypes[allTypesKey]
-          let effectivenessValue = effectivenessMap[effectivenessKey]
+          let effectivenessMap = allTypes[allTypesKey];
+          let effectivenessValue = effectivenessMap[effectivenessKey];
           
           //we only watnt to look at the values that are effecting our current pokemons type
           if (effectivenessKey === pokemonType) {
             //if we already have a value there ten we need to multiply what we have with what we are looking at
             //this is only going to be the case for dual type pokemon.
             if (typeEffectiveness[allTypesKey]) {
-              typeEffectiveness[allTypesKey] = typeEffectiveness[allTypesKey] * effectivenessValue
+              typeEffectiveness[allTypesKey] = typeEffectiveness[allTypesKey] * effectivenessValue;
             } else {
-              typeEffectiveness[allTypesKey] = effectivenessValue
+              typeEffectiveness[allTypesKey] = effectivenessValue;
             }
           }
         })
@@ -172,65 +183,65 @@ function App() {
 
     //this final loop puts the types into the respective weakTo or resistantTo object depending on the value
     Object.keys(typeEffectiveness).forEach( pokeType => {
-      if (typeEffectiveness[pokeType] > 1) weakTo[pokeType] = typeEffectiveness[pokeType]
-      if (typeEffectiveness[pokeType] < 1) resistantTo[pokeType] = typeEffectiveness[pokeType]
+      if (typeEffectiveness[pokeType] > 1) weakTo[pokeType] = typeEffectiveness[pokeType];
+      if (typeEffectiveness[pokeType] < 1) resistantTo[pokeType] = typeEffectiveness[pokeType];
     })
     
-    return {weakTo, resistantTo}
+    return {weakTo, resistantTo};
   }
 
   //this is working as a toggle from the flash card list to the quiz view
   //so we want to disable the list view and enable the quiz view
   const setQuizView = (pokemon) => {
-    setPokemonQuizView(pokemon)
-    setPokemonListView(false)
+    setPokemonQuizView(pokemon);
+    setPokemonListView(false);
   }
 
   const searchPokemon = (pokeName) => {
     //we want to lowercase all the search values so it works nicer 
-    let searchName = pokeName.toLowerCase()
+    let searchName = pokeName.toLowerCase();
     //here we filter our main pokemon list and set the filtered list
     //the pokemonList is our source of truth so anytime the search is edited
     //the UI resopnds to it, this allows for instant searching and when they delete the 
     //string it will return to the entire list
     let newList = pokemonList.filter(pokemon => {
-      let lowerName = pokemon.pokeName.toLowerCase()
-      return lowerName.includes(searchName)
+      let lowerName = pokemon.pokeName.toLowerCase();
+      return lowerName.includes(searchName);
     })
     
     //reset our values since we are searching, we don't need the other 
     //data for our quiz view 
-    setPokemonQuizView({})
-    setPokemonListView(true)
-    setFilteredList(newList)
+    setPokemonQuizView({});
+    setPokemonListView(true);
+    setFilteredList(newList);
   }
 
   //this restores the app to the original list view when the home button,
   //or "try another pokemon" button is clicked
   const resetApp = (noInfoMessage) => {
-    setPokemonListView(true)
-    setPokemonQuizView({})
-    setShowingPokemon(40)
-    console.log("wtf", noInfoMessage)
-    if (!noInfoMessage) setShowInfoMessage(true)
+    setPokemonListView(true);
+    setPokemonQuizView({});
+    setShowingPokemon(40);
+    
+    if (!noInfoMessage) setShowInfoMessage(true);
     
   }
 
   const updateQuizComplete = (pokeName) => {
-    let tempPokeList = pokemonList
+    let tempPokeList = pokemonList;
     for (let pokemon of tempPokeList) {
       if(pokemon.pokeName === pokeName) {
-        pokemon.completedQuiz = 1
+        pokemon.completedQuiz = 1;
       }
     }
     
-    setPokemonList(tempPokeList)
-    setFilteredList(tempPokeList)
+    setPokemonList(tempPokeList);
+    setFilteredList(tempPokeList);
   }
 
   //this is called when the user clicks the close info button
   const closeInfo = () => {
-    setShowInfoMessage(false)
+    setShowInfoMessage(false);
   }
   
 

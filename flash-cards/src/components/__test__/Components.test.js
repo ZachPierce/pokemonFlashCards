@@ -7,18 +7,18 @@ import InfoPanel from '../InfoPanel';
 //to take action
 test('Testing that the two buttons on the quiz card render', async () => {
     render(<PokemonQuizCard />);
-    const buttonCount = await screen.findAllByRole('button')
+    const buttonCount = await screen.findAllByRole('button');
     expect(buttonCount).toHaveLength(2);
   });
 
 test('Testing that the button on the detail card render', async () => {
   render(<PokemonDetailCard />);
-  const buttonCount = await screen.findAllByRole('button')
+  const buttonCount = await screen.findAllByRole('button');
   expect(buttonCount).toHaveLength(1);
 });
 
 test('Testing that the button on the info panel renders', async () => {
   render(<InfoPanel />);
-  const buttonCount = await screen.findAllByRole('button')
+  const buttonCount = await screen.findAllByRole('button');
   expect(buttonCount).toHaveLength(1);
 });
