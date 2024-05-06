@@ -78,7 +78,7 @@ function PokemonQuizCard ({pokeName, pokeType, weakness, resistances, updateQuiz
         }
         //final stage
         if (quizStage === 6) {
-            updateQuizComplete(pokeName)
+            updateQuizComplete(pokeName);
             return (
                 <p className='answer'>
                     Great Job!

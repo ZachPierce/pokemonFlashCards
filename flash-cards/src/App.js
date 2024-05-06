@@ -279,9 +279,6 @@ function App() {
               </span>
             )
           }) : null}
-
-          {/* this is a basic pagination functionality so we just show a show more button at the bottom and increase our number of
-          pokemon that are allowed to show */}
          
         </section>
 
